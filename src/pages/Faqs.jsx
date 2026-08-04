@@ -6,7 +6,7 @@ const Faqs = () => {
 
   const questions = [
     { q: "How do I book a private property tour?", a: "You can book directly from any property page. Select 'Book Tour', choose your preferred date, and our concierge will confirm within 2 hours." },
-    { q: "Are the listings on LowCost verified?", a: "Every property undergoes a 45-point inspection by our regional agents before being listed on our platform to ensure luxury standards." },
+    { q: "Are the listings on EasyAffordableHomes verified?", a: "Every property undergoes a 45-point inspection by our regional agents before being listed on our platform to ensure quality standards." },
     { q: "What is the tour fee for?", a: "The small refundable fee ensures serious inquiries. This amount is fully credited toward your first month's rent or security deposit." },
     { q: "Can I list my own property?", a: "Absolutely. Navigate to 'List Property' in the navbar to start the application. We specialize in high-end urban rentals and sales." }
   ];

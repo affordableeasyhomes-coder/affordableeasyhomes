@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';                // <-- added
-import Navbar from '../components/Navbar';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import StatesGrid from '../components/StatesGrid';
 import PropertyListings from '../components/PropertyListings';
 import Testimonials from '../components/Testimonials';
-import Footer from '../components/Footer';
 import BookingModal from '../components/BookingModal';
 import { fetchProperties, bookTour } from '../apiService';
 import { DEFAULT_STATS, DEFAULT_BOOKING_FORM, DEFAULT_FILTERS, AMENITIES } from '../config';
 import { 
   Shield, Clock, TrendingUp, Users, Award, Building,
   Instagram, Twitter, Facebook, CreditCard, DollarSign,
-  Search, Calendar, CheckCircle 
+  Search, Calendar, CheckCircle, ArrowRight
 } from 'lucide-react';
 
 // Icon mapping (unchanged)
@@ -34,7 +33,6 @@ const ICON_MAP = {
 };
 
 function Home() {
-  const [scrolled, setScrolled] = useState(false);
   const [properties, setProperties] = useState([]);
   const [displayedProperties, setDisplayedProperties] = useState([]);
   const [visibleCount, setVisibleCount] = useState(20);
@@ -112,15 +110,6 @@ function Home() {
   // const featuredPropertySchema = { ... };
 
   // ========== END SEO CONSTANTS ==========
-
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Fetch data
   useEffect(() => {
@@ -256,9 +245,7 @@ function Home() {
         {/* Optionally add featured property schema here */}
       </Helmet>
 
-      <Navbar scrolled={scrolled} />
-      
-      <HeroSection 
+      <HeroSection
         filters={filters}
         usStates={usStates}
         handleFilterChange={handleFilterChange}
@@ -290,7 +277,7 @@ function Home() {
             </div>
             <div className="text-center group">
               <div className="text-4xl md:text-5xl font-serif mb-3 text-stone-900 group-hover:scale-110 transition-transform duration-500 ease-out">{stats.countries}</div>
-              <p className="text-stone-500 text-xs md:text-sm uppercase tracking-[0.2em] font-medium">Countries</p>
+              <p className="text-stone-500 text-xs md:text-sm uppercase tracking-[0.2em] font-medium">States Covered</p>
             </div>
             <div className="text-center group">
               <div className="text-4xl md:text-5xl font-serif mb-3 text-stone-900 group-hover:scale-110 transition-transform duration-500 ease-out">{stats.satisfaction}</div>
@@ -361,12 +348,12 @@ function Home() {
             <p className="mb-8">
               We believe that a home is more than just a physical space; it is a reflection of the soul. Our collection features exclusive properties chosen for their character, light, and architectural integrity.
             </p>
-            <a href="#" className="group inline-flex items-center text-stone-900 font-medium hover:text-stone-600 transition-colors">
-              Read our philosophy 
+            <Link to="/about" className="group inline-flex items-center text-stone-900 font-medium hover:text-stone-600 transition-colors">
+              Read our philosophy
               <span className="bg-stone-100 p-2 rounded-full ml-3 group-hover:translate-x-2 transition-transform duration-300">
-                {/* Arrow icon would go here */}
+                <ArrowRight className="w-4 h-4" />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -415,12 +402,21 @@ function Home() {
                 panoramic views, and timeless architecture. Perfect for those who seek silence in the noise.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-stone-900 text-white px-10 py-4 rounded-full hover:bg-stone-700 transition shadow-lg hover:shadow-xl">
-                  View Property
+                <button
+                  onClick={() => {
+                    const section = document.getElementById('properties-section');
+                    if (section) section.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-stone-900 text-white px-10 py-4 rounded-full hover:bg-stone-700 transition shadow-lg hover:shadow-xl"
+                >
+                  View Properties
                 </button>
-                <button className="border border-stone-200 text-stone-900 px-10 py-4 rounded-full hover:bg-stone-50 transition">
-                  Schedule Visit
-                </button>
+                <Link
+                  to="/properties"
+                  className="border border-stone-200 text-stone-900 px-10 py-4 rounded-full hover:bg-stone-50 transition text-center"
+                >
+                  Schedule a Visit
+                </Link>
               </div>
             </div>
           </div>
@@ -500,9 +496,12 @@ function Home() {
               >
                 Browse Properties
               </button>
-              <button className="border border-white/30 backdrop-blur-sm text-white px-10 py-4 rounded-full hover:bg-white hover:text-black transition-all font-medium">
-                Download Portfolio
-              </button>
+              <Link
+                to="/list-property"
+                className="border border-white/30 backdrop-blur-sm text-white px-10 py-4 rounded-full hover:bg-white hover:text-black transition-all font-medium text-center"
+              >
+                List Your Property
+              </Link>
             </div>
           </div>
         </div>

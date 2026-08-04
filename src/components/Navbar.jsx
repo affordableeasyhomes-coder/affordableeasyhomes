@@ -18,11 +18,15 @@ import {
   Navigation
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { getFavorites, onFavoritesChange } from '../utils/favorites';
 
 const Navbar = ({ scrolled }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); 
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [savedCount, setSavedCount] = useState(() => getFavorites().length);
   const location = useLocation();
+
+  useEffect(() => onFavoritesChange(() => setSavedCount(getFavorites().length)), []);
 
   // Navigation links with icons
   const navLinks = [
@@ -109,26 +113,33 @@ const Navbar = ({ scrolled }) => {
 
           {/* RIGHT ACTION BUTTONS */}
           <div className="flex items-center gap-2">
-            <button className={`hidden sm:flex p-2.5 rounded-full transition-colors ${
-              scrolled 
-                ? 'hover:bg-stone-100 text-stone-700' 
-                : `hover:bg-white/15 ${textShadowClass}`
-            }`}>
+            <Link
+              to="/properties"
+              aria-label="Search properties"
+              className={`hidden sm:flex p-2.5 rounded-full transition-colors ${
+                scrolled
+                  ? 'hover:bg-stone-100 text-stone-700'
+                  : `hover:bg-white/15 ${textShadowClass}`
+              }`}
+            >
               <Search className={`w-4 h-4 ${scrolled ? 'text-stone-600' : 'text-white'}`} />
-            </button>
-            
-            <Link 
-              to="/saved" 
+            </Link>
+
+            <Link
+              to="/saved"
+              aria-label="Saved properties"
               className={`p-2.5 rounded-full transition-colors relative ${
-                scrolled 
-                  ? 'hover:bg-stone-100 text-stone-700' 
+                scrolled
+                  ? 'hover:bg-stone-100 text-stone-700'
                   : `hover:bg-white/15 ${textShadowClass}`
               }`}
             >
               <Heart className={`w-4 h-4 ${scrolled ? 'text-stone-600' : 'text-white'}`} />
-              <span className={`absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full ${
-                scrolled ? 'bg-stone-500' : 'bg-white'
-              }`}></span>
+              {savedCount > 0 && (
+                <span className={`absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full text-[9px] font-bold flex items-center justify-center ${
+                  scrolled ? 'bg-stone-900 text-white' : 'bg-white text-stone-900'
+                }`}>{savedCount}</span>
+              )}
             </Link>
             
             <Link 
@@ -212,14 +223,22 @@ const Navbar = ({ scrolled }) => {
 
           {/* MOBILE ACTIONS */}
           <div className="space-y-4">
-            {/* <Link
+            <Link
               to="/list-property"
               onClick={toggleMobile}
               className="flex items-center justify-center gap-2 w-full bg-white text-stone-900 py-4 rounded-xl font-semibold hover:bg-stone-100 transition-colors text-sm"
             >
               <Plus className="w-4 h-4" />
               List Your Property
-            </Link> */}
+            </Link>
+            <Link
+              to="/saved"
+              onClick={toggleMobile}
+              className="flex items-center justify-center gap-2 w-full bg-white/10 text-white py-4 rounded-xl font-semibold hover:bg-white/20 transition-colors text-sm"
+            >
+              <Heart className="w-4 h-4" />
+              Saved Properties {savedCount > 0 && `(${savedCount})`}
+            </Link>
 
             <div className="flex items-center justify-center gap-6 py-6">
               <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors">

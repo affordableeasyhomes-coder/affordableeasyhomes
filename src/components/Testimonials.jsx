@@ -3,7 +3,7 @@ import { Star, ArrowRight } from 'lucide-react';
 
 const Testimonials = ({ visibleTestimonials, setVisibleTestimonials }) => {
   const testimonials = [
-    { name: "Alex Morgan", role: "Investor, New York, NY", quote: "LowCostApartments made finding premium rentals effortless and enjoyable." },
+    { name: "Alex Morgan", role: "Investor, New York, NY", quote: "EasyAffordableHomes made finding premium rentals effortless and enjoyable." },
     { name: "Sofia Parker", role: "Interior Designer, Los Angeles, CA", quote: "The level of detail and service is unmatched. Truly exceptional." },
     { name: "Michael Johnson", role: "Tech Executive, San Francisco, CA", quote: "Every property feels thoughtfully curated. Highly recommended." },
     { name: "James Walker", role: "Startup Founder, Austin, TX", quote: "An elegant experience from start to finish. Five stars." },

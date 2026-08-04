@@ -1,29 +1,29 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Helmet } from "react-helmet-async";                // <-- added
+import { Helmet } from "react-helmet-async";
 import { Search, SlidersHorizontal, AlertCircle, X } from "lucide-react";
 import PropertyCard from "../components/PropertyCard";
-import Navbar from '../components/Navbar';
-import { fetchProperties } from "../apiService";
-import { useLocation } from 'react-router-dom';
+import { fetchProperties, bookTour } from "../apiService";
+import { useSearchParams } from 'react-router-dom';
 import BookingModal from '../components/BookingModal';
-import { bookTour } from '../apiService';
 import { DEFAULT_BOOKING_FORM } from '../config';
 
 const Properties = ({ locationFilter, categoryFilter }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || "");
   const [sortBy, setSortBy] = useState("newest");
+
+  // Filters arriving via URL (e.g. /properties?state=Texas or ?city=Miami)
+  const stateParam = searchParams.get('state');
+  const cityParam = searchParams.get('city');
 
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [bookingForm, setBookingForm] = useState(DEFAULT_BOOKING_FORM);
   const [bookingStatus, setBookingStatus] = useState(null);
   const [tourFee, setTourFee] = useState(50.00);
-
-  const location = useLocation();
 
   // ========== SEO CONSTANTS (replace with your actual data) ==========
   const siteUrl = 'https://easyaffordablehome.com';          // your domain
@@ -104,13 +104,6 @@ const Properties = ({ locationFilter, categoryFilter }) => {
   }
   // ========== END SEO CONSTANTS ==========
 
-  // Handle Navbar scroll effect
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Initial Data Load
   useEffect(() => {
     const loadProperties = async () => {
@@ -134,34 +127,46 @@ const Properties = ({ locationFilter, categoryFilter }) => {
 
     // 1. Route-based Filtering (Hubs & Collections)
     if (locationFilter) {
-      result = result.filter(p => 
-        p.location.toLowerCase().includes(locationFilter.toLowerCase())
+      result = result.filter(p =>
+        p.location?.toLowerCase().includes(locationFilter.toLowerCase())
       );
     }
-    
+
     if (categoryFilter === 'luxury') {
-      // Assuming luxury is defined by price > 5000 or a specific tag
+      // Luxury is defined by price > 5000 or a specific tag
       result = result.filter(p => p.price > 5000 || p.tag?.toLowerCase() === 'luxury');
     }
 
-    // 2. Search Bar Filtering
-    if (searchTerm) {
-      const lowerTerm = searchTerm.toLowerCase();
-      result = result.filter(p => 
-        p.title.toLowerCase().includes(lowerTerm) || 
-        p.location.toLowerCase().includes(lowerTerm)
+    // 2. URL query filters (from Locations page links)
+    if (stateParam) {
+      result = result.filter(p => p.state?.toLowerCase() === stateParam.toLowerCase());
+    }
+    if (cityParam) {
+      result = result.filter(p =>
+        p.city?.toLowerCase().includes(cityParam.toLowerCase()) ||
+        p.location?.toLowerCase().includes(cityParam.toLowerCase())
       );
     }
 
-    // 3. Sorting
+    // 3. Search Bar Filtering
+    if (searchTerm) {
+      const lowerTerm = searchTerm.toLowerCase();
+      result = result.filter(p =>
+        p.title?.toLowerCase().includes(lowerTerm) ||
+        p.location?.toLowerCase().includes(lowerTerm) ||
+        p.state?.toLowerCase().includes(lowerTerm)
+      );
+    }
+
+    // 4. Sorting
     switch (sortBy) {
       case "price-asc": result.sort((a, b) => a.price - b.price); break;
       case "price-desc": result.sort((a, b) => b.price - a.price); break;
       case "rating": result.sort((a, b) => (b.rating || 0) - (a.rating || 0)); break;
-      default: result.sort((a, b) => b.id - a.id);
+      default: result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }
     return result;
-  }, [properties, searchTerm, sortBy, locationFilter, categoryFilter]);
+  }, [properties, searchTerm, sortBy, locationFilter, categoryFilter, stateParam, cityParam]);
 
   const handleBookTour = (property) => {
     setSelectedProperty(property);
@@ -260,8 +265,6 @@ const Properties = ({ locationFilter, categoryFilter }) => {
         </script>
       </Helmet>
 
-      <Navbar scrolled={scrolled} />
-
       {/* Dynamic Header based on Filter */}
       <div className="pt-32 pb-12 bg-white border-b border-stone-100">
         <div className="container mx-auto max-w-7xl px-6">
@@ -270,12 +273,12 @@ const Properties = ({ locationFilter, categoryFilter }) => {
               <div className="flex items-center gap-3 mb-2">
                 <span className="h-px w-8 bg-stone-300"></span>
                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-stone-400">
-                  {locationFilter || categoryFilter || 'All Listings'}
+                  {locationFilter || stateParam || cityParam || categoryFilter || 'All Listings'}
                 </span>
               </div>
               <h1 className="text-4xl md:text-5xl font-serif text-stone-900">
-                {locationFilter
-                  ? `Easy Affordable Homes in ${locationFilter}`
+                {locationFilter || stateParam || cityParam
+                  ? `Affordable Homes in ${locationFilter || cityParam || stateParam}`
                   : categoryFilter === 'luxury'
                   ? 'Luxury Homes Collection'
                   : 'Easy Affordable Home Listings'}
@@ -320,11 +323,19 @@ const Properties = ({ locationFilter, categoryFilter }) => {
 
       <main className="container mx-auto max-w-7xl px-6 py-16">
         {/* Active Filter Pills */}
-        {(locationFilter || categoryFilter) && (
-          <div className="flex gap-2 mb-10">
-            <div className="flex items-center gap-2 px-4 py-2 bg-stone-900 text-white text-[10px] font-bold uppercase rounded-full">
-              {locationFilter || categoryFilter}
-            </div>
+        {(locationFilter || categoryFilter || stateParam || cityParam || searchTerm) && (
+          <div className="flex flex-wrap gap-2 mb-10">
+            {(locationFilter || categoryFilter) && (
+              <div className="flex items-center gap-2 px-4 py-2 bg-stone-900 text-white text-[10px] font-bold uppercase rounded-full">
+                {locationFilter || categoryFilter}
+              </div>
+            )}
+            {(stateParam || cityParam) && (
+              <div className="flex items-center gap-2 px-4 py-2 bg-stone-900 text-white text-[10px] font-bold uppercase rounded-full">
+                {cityParam || stateParam}
+                <X className="w-3 h-3 cursor-pointer" onClick={() => setSearchParams({})} />
+              </div>
+            )}
             {searchTerm && (
               <div className="flex items-center gap-2 px-4 py-2 bg-stone-200 text-stone-600 text-[10px] font-bold uppercase rounded-full">
                 Search: {searchTerm}
@@ -344,7 +355,7 @@ const Properties = ({ locationFilter, categoryFilter }) => {
               No affordable homes found
             </h3>
             <p className="text-stone-500 font-light mb-8">Try adjusting your filters or searching another area.</p>
-            <button onClick={() => {setSearchTerm(""); window.location.href='/properties'}} className="bg-stone-900 text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest">View All Listings</button>
+            <button onClick={() => { setSearchTerm(""); setSearchParams({}); }} className="bg-stone-900 text-white px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest">View All Listings</button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

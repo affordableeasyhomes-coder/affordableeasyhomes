@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import React from 'react';
 import { motion } from "framer-motion";
 import { CheckCircle, Home, Shield, Users, Target, Globe, Heart, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const About = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-      // Handle scroll effect
-      useEffect(() => {
-        const handleScroll = () => {
-          setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, []);
-
   const values = [
     { icon: Shield, title: "Trust & Transparency", desc: "No hidden fees, no misleading photos, just honest listings you can rely on." },
     { icon: Target, title: "Value-First Approach", desc: "We prioritize properties that offer the best quality for your budget." },
@@ -41,7 +29,6 @@ const About = () => {
 
   return (
     <div className="bg-white overflow-hidden">
-         <Navbar scrolled={scrolled} />
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center px-6 py-20">
         <div className="absolute inset-0 bg-gradient-to-br from-stone-900/95 to-stone-800/90">
@@ -106,7 +93,7 @@ const About = () => {
               </div>
               
               <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight">
-                Why We Started LowCost<span className="text-stone-400">.</span>
+                Why We Started EasyAffordableHomes<span className="text-stone-400">.</span>
               </h2>
               
               <div className="space-y-6">
@@ -352,7 +339,7 @@ const About = () => {
               <div className="mt-12 pt-8 border-t border-white/20">
                 <p className="text-stone-400 text-sm">
                   Need help? Our support team is available 7 days a week.
-                  <a href="mailto:help@lowcost.com" className="text-white hover:underline ml-2">help@lowcost.com</a>
+                  <a href="mailto:support@easyaffordablehome.com" className="text-white hover:underline ml-2">support@easyaffordablehome.com</a>
                 </p>
               </div>
             </div>
