@@ -13,9 +13,16 @@ const MortgageCalculator = () => {
     const calculatedInterest = interestRate / 100 / 12;
     const calculatedPayments = loanTerm * 12;
 
-    const x = Math.pow(1 + calculatedInterest, calculatedPayments);
-    const monthly = (principal * x * calculatedInterest) / (x - 1);
-    
+    let monthly;
+    if (principal <= 0 || calculatedPayments <= 0) {
+      monthly = 0;
+    } else if (calculatedInterest === 0) {
+      monthly = principal / calculatedPayments;
+    } else {
+      const x = Math.pow(1 + calculatedInterest, calculatedPayments);
+      monthly = (principal * x * calculatedInterest) / (x - 1);
+    }
+
     setMonthlyPayment(monthly.toFixed(2));
   }, [homePrice, downPayment, interestRate, loanTerm]);
 
