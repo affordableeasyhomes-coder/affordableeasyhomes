@@ -92,7 +92,7 @@ const Footer = () => {
             <a href="mailto:westleykate71@gmail.com" className="hover:text-white transition-colors">westleykate71@gmail.com</a>
           </div>
           <p className="text-stone-500 text-xs tracking-wide">
-            Illinois Real Estate License #475.212757 &middot; Valid through 04/30/2028
+            License 475212757
           </p>
         </div>
 
