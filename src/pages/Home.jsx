@@ -111,9 +111,11 @@ function Home() {
 
   // ========== END SEO CONSTANTS ==========
 
-  // Fetch data
+  // Fetch data when filters change, debounced so typing a price doesn't fire
+  // a request per keystroke (a partial "$2" would briefly wipe out results)
   useEffect(() => {
-    loadData();
+    const timer = setTimeout(loadData, 350);
+    return () => clearTimeout(timer);
   }, [filters]);
 
   // Update displayed properties when properties or visibleCount changes
@@ -129,7 +131,12 @@ function Home() {
       
       const data = await fetchProperties(filters);
       setProperties(data.properties);
-      setUsStates(data.states);
+      // Only refresh state stats from unfiltered loads, otherwise the state
+      // dropdown and grid would shrink to whatever the current filter matches
+      const hasFilters = Boolean(filters.state || filters.type || filters.min_price || filters.max_price);
+      if (!hasFilters || usStates.length === 0) {
+        setUsStates(data.states);
+      }
       setTourFee(data.tourFee);
       
       if (data.stats) {

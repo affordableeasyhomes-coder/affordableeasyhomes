@@ -119,19 +119,27 @@ const HeroSection = ({ filters, usStates, handleFilterChange, loadData }) => {
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 group-hover:text-white transition-colors">
                 <span className="text-lg font-serif">$</span>
               </div>
-              <input 
-                type="text" 
-                placeholder="Max Price" 
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="Max Price"
                 className="w-full bg-transparent text-white pl-12 pr-4 py-4 outline-none placeholder-white/50 text-base font-medium focus:bg-white/5 transition-colors rounded-b-2xl md:rounded-r-none md:rounded-bl-none"
                 value={filters.max_price}
-                onChange={(e) => handleFilterChange('max_price', e.target.value)}
+                onChange={(e) => handleFilterChange('max_price', e.target.value.replace(/[^0-9]/g, ''))}
               />
             </div>
 
             {/* Action Button */}
-            <button 
+            <button
               className="w-full md:w-auto bg-white text-stone-900 px-8 py-4 rounded-2xl md:rounded-2xl hover:bg-stone-100 transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
-              onClick={loadData}
+              onClick={() => {
+                loadData();
+                const section = document.getElementById('properties-section');
+                if (section) {
+                  const y = section.getBoundingClientRect().top + window.pageYOffset - 100;
+                  window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+              }}
             >
               <Search className="w-5 h-5" />
               <span>Search</span>
