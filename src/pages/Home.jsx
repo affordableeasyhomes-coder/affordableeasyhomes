@@ -446,6 +446,32 @@ function Home() {
         />
       </section>
 
+      {/* Private Inventory Notice */}
+      <section className="pb-24 bg-stone-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto bg-white border border-stone-200 rounded-3xl p-10 md:p-12 text-center shadow-sm">
+            <p className="uppercase tracking-[0.3em] text-[10px] font-bold text-stone-400 mb-5">
+              Private Inventory
+            </p>
+            <h3 className="text-2xl md:text-3xl font-serif text-stone-900 mb-5">
+              More homes than you see here
+            </h3>
+            <p className="text-stone-600 font-light leading-relaxed max-w-2xl mx-auto mb-8">
+              Not all of our available units are displayed on our website because many of the
+              properties are privately owned and managed. As a result, only a selection of our
+              listings is published publicly, while others are offered directly through our
+              leasing process.
+            </p>
+            <Link
+              to="/support"
+              className="inline-flex items-center gap-2 bg-stone-900 text-white px-8 py-4 rounded-full hover:bg-stone-700 transition font-medium text-sm"
+            >
+              Ask About Private Listings <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Amenities Section */}
       <section id="amenities" className="py-24 bg-stone-100">
         <div className="container mx-auto px-6">
