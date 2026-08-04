@@ -72,8 +72,8 @@ const Contact = () => {
                 <div className="p-4 bg-stone-50 rounded-full"><BadgeCheck className="w-6 h-6 text-stone-900" /></div>
                 <div>
                   <h4 className="font-bold uppercase tracking-widest text-[10px] text-stone-400 mb-1">Licensed Broker</h4>
-                  <p className="text-stone-900 text-xl font-medium">Illinois License #475.212757</p>
-                  <p className="text-stone-400 text-sm mt-1">Valid through April 30, 2028</p>
+                  <p className="text-stone-900 text-xl font-medium">License 475212757</p>
+                 
                 </div>
               </div>
             </div>
