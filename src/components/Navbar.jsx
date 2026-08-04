@@ -254,7 +254,7 @@ const Navbar = ({ scrolled }) => {
 
             <div className="text-center pt-4 border-t border-white/10">
               <p className="text-stone-500 text-xs">
-                Need help? <a href="tel:+1234567890" className="text-white hover:underline">Call us</a>
+                Need help? <a href="tel:+17168891380" className="text-white hover:underline">Call us</a>
               </p>
             </div>
           </div>

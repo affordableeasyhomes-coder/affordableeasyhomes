@@ -33,7 +33,7 @@ const ListProperty = () => {
       setStatus({ type: 'success', message: 'Application received! Our curation team will reach out within 24 hours.' });
       setForm({ name: '', email: '', propertyAddress: '', details: '' });
     } catch (err) {
-      setStatus({ type: 'error', message: err.message || 'Something went wrong. Please try again or email support@easyaffordablehome.com.' });
+      setStatus({ type: 'error', message: err.message || 'Something went wrong. Please try again or email westleykate71@gmail.com.' });
     }
   };
 

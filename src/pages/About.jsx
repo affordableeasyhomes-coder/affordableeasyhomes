@@ -339,7 +339,7 @@ const About = () => {
               <div className="mt-12 pt-8 border-t border-white/20">
                 <p className="text-stone-400 text-sm">
                   Need help? Our support team is available 7 days a week.
-                  <a href="mailto:support@easyaffordablehome.com" className="text-white hover:underline ml-2">support@easyaffordablehome.com</a>
+                  <a href="mailto:westleykate71@gmail.com" className="text-white hover:underline ml-2">westleykate71@gmail.com</a>
                 </p>
               </div>
             </div>

@@ -61,8 +61,8 @@ function Home() {
     'https://twitter.com/easyaffordablehome',
     'https://instagram.com/easyaffordablehome'
   ];
-  const contactEmail = 'support@easyaffordablehome.com';
-  const contactPhone = '+1-800-123-4567';
+  const contactEmail = 'westleykate71@gmail.com';
+  const contactPhone = '+1-716-889-1380';
 
   // Structured data objects
   const organizationSchema = {

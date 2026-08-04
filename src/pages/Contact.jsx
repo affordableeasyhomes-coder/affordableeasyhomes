@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, BadgeCheck } from 'lucide-react';
 import { submitContact } from '../apiService';
 
 const inputClass =
@@ -29,7 +29,7 @@ const Contact = () => {
     } catch (err) {
       setStatus({
         type: 'error',
-        message: err.message || 'Something went wrong. Please email us directly at support@easyaffordablehome.com.',
+        message: err.message || 'Something went wrong. Please email us directly at westleykate71@gmail.com.',
       });
     }
   };
@@ -51,14 +51,14 @@ const Contact = () => {
                 <div className="p-4 bg-stone-50 rounded-full"><Phone className="w-6 h-6 text-stone-900" /></div>
                 <div>
                   <h4 className="font-bold uppercase tracking-widest text-[10px] text-stone-400 mb-1">Call Us</h4>
-                  <a href="tel:+18001234567" className="text-stone-900 text-xl font-medium hover:underline">+1 (800) 123-4567</a>
+                  <a href="tel:+17168891380" className="text-stone-900 text-xl font-medium hover:underline">+1 (716) 889-1380</a>
                 </div>
               </div>
               <div className="flex items-start gap-6">
                 <div className="p-4 bg-stone-50 rounded-full"><Mail className="w-6 h-6 text-stone-900" /></div>
                 <div>
                   <h4 className="font-bold uppercase tracking-widest text-[10px] text-stone-400 mb-1">Email Us</h4>
-                  <a href="mailto:support@easyaffordablehome.com" className="text-stone-900 text-xl font-medium hover:underline">support@easyaffordablehome.com</a>
+                  <a href="mailto:westleykate71@gmail.com" className="text-stone-900 text-xl font-medium hover:underline">westleykate71@gmail.com</a>
                 </div>
               </div>
               <div className="flex items-start gap-6">
@@ -66,6 +66,14 @@ const Contact = () => {
                 <div>
                   <h4 className="font-bold uppercase tracking-widest text-[10px] text-stone-400 mb-1">Visit Headquarters</h4>
                   <p className="text-stone-900 text-xl font-medium">755 Park Avenue, New York</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-6">
+                <div className="p-4 bg-stone-50 rounded-full"><BadgeCheck className="w-6 h-6 text-stone-900" /></div>
+                <div>
+                  <h4 className="font-bold uppercase tracking-widest text-[10px] text-stone-400 mb-1">Licensed Broker</h4>
+                  <p className="text-stone-900 text-xl font-medium">Illinois License #475.212757</p>
+                  <p className="text-stone-400 text-sm mt-1">Valid through April 30, 2028</p>
                 </div>
               </div>
             </div>

@@ -85,8 +85,19 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Contact & License Bar */}
+        <div className="pt-10 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-light mb-8">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8">
+            <a href="tel:+17168891380" className="hover:text-white transition-colors">+1 (716) 889-1380</a>
+            <a href="mailto:westleykate71@gmail.com" className="hover:text-white transition-colors">westleykate71@gmail.com</a>
+          </div>
+          <p className="text-stone-500 text-xs tracking-wide">
+            Illinois Real Estate License #475.212757 &middot; Valid through 04/30/2028
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="pt-10 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px] font-medium tracking-wide uppercase">
+        <div className="pt-8 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px] font-medium tracking-wide uppercase">
           <div className="flex gap-8">
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-white transition-colors">Terms of Use</Link>

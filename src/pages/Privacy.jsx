@@ -19,11 +19,11 @@ const SECTIONS = [
   },
   {
     title: '5. Your Rights',
-    body: 'You may request a copy of the personal data we hold about you, ask us to correct it, or ask us to delete it at any time by emailing support@easyaffordablehome.com. We respond to all requests within 30 days.',
+    body: 'You may request a copy of the personal data we hold about you, ask us to correct it, or ask us to delete it at any time by emailing westleykate71@gmail.com. We respond to all requests within 30 days.',
   },
   {
     title: '6. Contact',
-    body: 'For any privacy-related questions, contact our team at support@easyaffordablehome.com or +1 (800) 123-4567.',
+    body: 'For any privacy-related questions, contact our team at westleykate71@gmail.com or +1 (716) 889-1380.',
   },
 ];
 
