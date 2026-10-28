@@ -23,7 +23,7 @@ const Properties = ({ locationFilter, categoryFilter }) => {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [bookingForm, setBookingForm] = useState(DEFAULT_BOOKING_FORM);
   const [bookingStatus, setBookingStatus] = useState(null);
-  const [tourFee, setTourFee] = useState(50.00);
+  const [tourFee, setTourFee] = useState(500);
 
   // ========== SEO CONSTANTS (replace with your actual data) ==========
   const siteUrl = 'https://easyaffordablehome.com';          // your domain
