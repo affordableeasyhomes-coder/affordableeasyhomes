@@ -109,9 +109,15 @@ const Properties = ({ locationFilter, categoryFilter }) => {
     const loadProperties = async () => {
       try {
         setLoading(true);
-        const data = await fetchProperties({});
-        setProperties(data.properties);
-        setTourFee(data.tourFee || 500);
+       const data = await fetchProperties({});
+      console.log('raw tour fee from API:', data.tour_fee, '/', data.tourFee); // temp debug
+
+      setProperties(data.properties ?? []);
+      setTourFee(
+        data.tour_fee ??        // backend sends snake_case
+        data.tourFee  ??        // in case apiService ever normalizes it
+        500                     // final fallback
+      );
       } catch (err) {
         setError("Unable to load properties. Please try again later.");
       } finally {
