@@ -111,7 +111,7 @@ const Properties = ({ locationFilter, categoryFilter }) => {
         setLoading(true);
         const data = await fetchProperties({});
         setProperties(data.properties);
-        setTourFee(data.tourFee || 50.00);
+        setTourFee(data.tourFee || 500);
       } catch (err) {
         setError("Unable to load properties. Please try again later.");
       } finally {
