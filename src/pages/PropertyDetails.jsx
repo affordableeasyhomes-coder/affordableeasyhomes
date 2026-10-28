@@ -25,7 +25,7 @@ const PropertyDetails = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingForm, setBookingForm] = useState(DEFAULT_BOOKING_FORM);
   const [bookingStatus, setBookingStatus] = useState(null);
-  const [tourFee, setTourFee] = useState(50.00);
+  const [tourFee, setTourFee] = useState(500);
 
   const handleBookingChange = (e) => {
     const { name, value } = e.target;
@@ -83,7 +83,7 @@ const PropertyDetails = () => {
       try {
         const data = await fetchPropertyById(propertyId);
         setProperty(data.property);
-        setTourFee(data.tourFee || 50.00);
+        setTourFee(data.tourFee || 500);
         if (data.property) setFavorite(isFavorite(data.property.id));
       } catch (err) {
         console.error('Failed to load property:', err);
