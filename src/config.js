@@ -1,5 +1,5 @@
 // API Configuration
-export const API_BASE_URL = 'https://aehomesbackend.onrender.com/api';
+export const API_BASE_URL = 'https://aehomesbackend.vercel.app/api';
 
 // Amenities Data (icons as string references only)
 export const AMENITIES = [
